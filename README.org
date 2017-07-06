@@ -1,0 +1,11 @@
+#+TITLE: ecmwf-data
+#+AUTHOR: Benjamin S. Grandey
+
+* Purpose
+Download ECMWF reanalysis data via the API.
+
+* Status
+Work in progress
+
+* Requirements
+[[https://software.ecmwf.int/wiki/display/WEBAPI/Access%2BECMWF%2BPublic%2BDatasets][ECMWF API key and python client library (ecmwfapi)]].
