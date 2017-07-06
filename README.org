@@ -11,6 +11,10 @@ Download ECMWF reanalysis data via the API.
 retrieve_era_interim('2t', 'sfc', '2016', step='0', area='5/100/-5/105')
 #+END_SRC
 
+Prior to running this, users should create a =data/= directory in the local path. The downloaded data will be saved in =data/=.
+
+[[https://github.com/grandey/ecmwf-data/blob/master/main_retrieve_ei.py][main_retrieve_ei.py]] is a master script that makes use of =ecmwf_data.retrieve_era_interim=.
+
 ** Requirements
 1. [[https://software.ecmwf.int/wiki/display/WEBAPI/Access%2BECMWF%2BPublic%2BDatasets][ECMWF API key and python client library (ecmwfapi)]].
 1. python3
