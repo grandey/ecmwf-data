@@ -9,3 +9,6 @@ Work in progress
 
 * Requirements
 [[https://software.ecmwf.int/wiki/display/WEBAPI/Access%2BECMWF%2BPublic%2BDatasets][ECMWF API key and python client library (ecmwfapi)]].
+
+* Author
+Benjamin S. Grandey, 2017
