@@ -10,5 +10,12 @@ Work in progress
 * Requirements
 [[https://software.ecmwf.int/wiki/display/WEBAPI/Access%2BECMWF%2BPublic%2BDatasets][ECMWF API key and python client library (ecmwfapi)]].
 
+* Converting GRIB to NetCDF
+This can easily be done using [[https://code.mpimet.mpg.de/projects/cdo][CDO]]:
+
+#+BEGIN_SRC
+cdo -f nc copy ifile.grb ofile.nc
+#+END_SRC
+
 * Author
 Benjamin S. Grandey, 2017
