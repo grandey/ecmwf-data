@@ -4,11 +4,11 @@
 * Purpose
 Download ECMWF reanalysis data via the API.
 
-* Status
-Work in progress
-
 * Requirements
 [[https://software.ecmwf.int/wiki/display/WEBAPI/Access%2BECMWF%2BPublic%2BDatasets][ECMWF API key and python client library (ecmwfapi)]].
+
+* Usage
+[[https://github.com/grandey/ecmwf-data/blob/master/ecmwf_data.py][ecmwf_data.py]] contains a function called =retrieve_era_interim= which facilitates downloading of ERA-Interim data for a given parameter and year.
 
 * Converting GRIB to NetCDF
 This can easily be done using [[https://code.mpimet.mpg.de/projects/cdo][CDO]]:
