@@ -15,7 +15,7 @@ from ecmwf_data import retrieve_era_interim
 
 
 # Region bounds (N/W/S/E)
-area = '20/80/-10/150'  # domain agreed with Hsiang-He
+area = '30/60/-20/150'  # Southeast Asia, agreed with Hsiang-He
 
 # Years to retrieve
 years = [str(y) for y in range(1979, 2016+1)]  # 1979-2016
