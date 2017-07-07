@@ -15,13 +15,13 @@ from ecmwf_data import retrieve_era_interim
 
 
 # Region bounds (N/W/S/E)
-area = '5/100/-5/105'  # small area for testing
+area = '20/80/-10/150'  # domain agreed with Hsiang-He
 
 # Years to retrieve
-years = [str(y) for y in range(2015, 2016+1)]  # 2-years for testing
+years = [str(y) for y in range(1979, 2016+1)]  # 1979-2016
 
 # Short names of parametres to retrieve
-sfc_0_params = ['msl', '2t', '2d', ]  # surface, step=0
+sfc_0_params = ['msl', '2t', '2d', 'tcw']  # surface, step=0
 sfc_3_params = ['cape', 'tp']  # surface, step=3
 pl_params = ['u', 'v', 'w', 'r']  # model levels, step=0
 
