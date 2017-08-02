@@ -42,7 +42,7 @@ param_dict = {
 }
 
 
-def retrieve_era_interim(param, level, year, step='0', area='Glb', overwrite=False):
+def retrieve_era_interim(param, level, year, step='0', area='Glb', nc=False, overwrite=False):
     """
     Function to retrieve ERA-Interim data from MARS via the ECMWF API.
 
@@ -52,11 +52,14 @@ def retrieve_era_interim(param, level, year, step='0', area='Glb', overwrite=Fal
         year: string containing year (e.g. '1979')
         step: string containing information about step (default '0')
         area: 'Glb' (global; default) or string containing bounds (N/W/S/E, e.g. '30/90/-10/120')
+        nc: if True, request NetCDF format; if False (default), the files will be GRIB format
         overwrite: if True, replace existing files; if False (default), skip existing files
 
     Output file:
         GRIB file:
             data/ei_<area>/<param>_<code>_<level>/ei_<param>_<code>_<level>_<step>_<year>.grb
+        or NetCDF file:
+            data/ei_<area>/<param>_<code>_<level>_nc/ei_<param>_<code>_<level>_<step>_<year>_nc.nc
         where <code> is the parameter code (see param_dict) and <area> has '/' replaced by 'n'/'e'.
 
     Returns:
@@ -67,8 +70,12 @@ def retrieve_era_interim(param, level, year, step='0', area='Glb', overwrite=Fal
     print('param={}, level={}, year={}, step={}, area={}'.format(param, level, year, step, area))
     code = param_dict[param]
     area_ne = '{}n{}e{}n{}e'.format(*area.split('/'))
-    out_dir = 'data/ei_{}/{}_{}_{}'.format(area_ne, param, code, level)
-    out_filename = 'ei_{}_{}_{}_{}_{}.grb'.format(param, code, level, step, year)
+    if nc is True:
+        out_dir = 'data/ei_{}/{}_{}_{}_nc'.format(area_ne, param, code, level)
+        out_filename = 'ei_{}_{}_{}_{}_{}_nc.nc'.format(param, code, level, step, year)
+    else:
+        out_dir = 'data/ei_{}/{}_{}_{}'.format(area_ne, param, code, level)
+        out_filename = 'ei_{}_{}_{}_{}_{}.grb'.format(param, code, level, step, year)
     # Check if output file already exists
     if os.path.exists('{}/{}'.format(out_dir, out_filename)):
         if overwrite is False:
@@ -84,10 +91,14 @@ def retrieve_era_interim(param, level, year, step='0', area='Glb', overwrite=Fal
         'param': '{}.128'.format(code),
         'step': step,
         'stream': 'oper',
-        'time': '00:00:00/06:00:00/12:00:00/18:00:00',
-        'type': 'an',
         'target': 'data/temp_{}'.format(out_filename),  # temporary file location
     }
+    if step == '0':
+        retrieval_dict['type'] = 'an'
+        retrieval_dict['time'] = '00:00:00/06:00:00/12:00:00/18:00:00'
+    else:
+        retrieval_dict['type'] = 'fc'
+        retrieval_dict['time'] = '00:00:00/12:00:00'
     if level == 'sfc':
         retrieval_dict['levtype'] = 'sfc'
     elif level[0:2] == 'pl':
@@ -95,6 +106,8 @@ def retrieve_era_interim(param, level, year, step='0', area='Glb', overwrite=Fal
         retrieval_dict['levelist'] = level[2:]
     if area != 'Glb':
         retrieval_dict['area'] = area
+    if nc is True:
+        retrieval_dict['format'] = 'netcdf'
     # Retrieve data to temporary location
     server = ECMWFDataServer()
     server.retrieve(retrieval_dict)
